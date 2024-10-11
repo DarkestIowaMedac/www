@@ -20,4 +20,4 @@ Route::get('/intento2', function () {
 
 Route::get('/intento3', [UserController::class, 'create']); //En la forma corta
 Route::get('/intento4', [UserController::class, 'prueba']); //En la forma corta
-Route::get('/esPrimo', [Tema5Controller::class, 'esPrimo']);
+Route::get('/esPrimo', [Tema5Controller::class, 'esPrimo']); // ccc
