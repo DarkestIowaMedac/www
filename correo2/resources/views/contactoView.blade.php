@@ -7,8 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    @isset($comprobar)
-        {{$comprobar}}
-    @endisset
+    <h1>Rafa Alvariño</h1>
 </body>
 </html>
