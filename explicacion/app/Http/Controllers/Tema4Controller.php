@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Correo;
 
 class Tema4Controller extends Controller
 {
@@ -69,29 +70,16 @@ class Tema4Controller extends Controller
 
         $correo = $request['email'];
         $contraseña = $request['password'];
-
-
-        $consulta = "SELECT * FROM correos";
-
-       // $datos = mysqli_query($conexion, $consulta);
-
-        $emails = [];
-        $pass = [];
-        $uservalidado = false;
-       // while ($row = mysqli_fetch_array($datos)){
-       //     array_push($emails, $row["email"]);//row["nombre"]
-       //     array_push($pass, $row["nombre"]);
-      //  }
-
-
-        for($i = 0; $i < count($emails); $i++){
-            if($emails[$i] == $correo && $pass[$i] == $contraseña){
-                $uservalidado = true;
-            }
+        if($correo == null){
+            return view("tema4_4");
         }
+        // Use Eloquent to query the database
+        $correos = Correo::where('titulo', $correo)->where('nombre', $contraseña)->get();
 
+        $uservalidado = $correos->count() > 0; // check if there's at least one matching record
+
+        
         return view("tema4_4")->with(["validacion"=>$uservalidado]);
-
 
     }
 

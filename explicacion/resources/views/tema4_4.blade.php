@@ -20,8 +20,9 @@
         <br>
         <button type="submit">Comprobar</button>
     </form>
-    @isset($fibonacci)
-    <p>{{ $fibonacci }}</p>
+    @isset($validacion)
+    <p>{{ $validacion ? 'Usuario validado' : 'Datos incorrectos' }}</p>
     @endisset
+    <p>FEAEFAEFEA</p>
 </body>
 </html>
