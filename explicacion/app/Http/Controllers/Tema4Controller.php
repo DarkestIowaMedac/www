@@ -74,11 +74,11 @@ class Tema4Controller extends Controller
             return view("tema4_4");
         }
         // Use Eloquent to query the database
-        $correos = Correo::where('titulo', $correo)->where('nombre', $contraseña)->get();
+        $correos = Correo::where('email', $correo)->where('contraseña', $contraseña)->get();
 
         $uservalidado = $correos->count() > 0; // check if there's at least one matching record
 
-        
+
         return view("tema4_4")->with(["validacion"=>$uservalidado]);
 
     }
