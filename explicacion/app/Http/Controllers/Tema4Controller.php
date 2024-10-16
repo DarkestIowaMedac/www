@@ -80,7 +80,7 @@ class Tema4Controller extends Controller
 
 
         return view("tema4_4")->with(["validacion"=>$uservalidado]);
-
+        
     }
 
 }
