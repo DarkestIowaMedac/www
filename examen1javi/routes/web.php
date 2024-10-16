@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::post('/login', [UserController::class, 'login']);
+Route::get('/login', [UserController::class, 'login']);
