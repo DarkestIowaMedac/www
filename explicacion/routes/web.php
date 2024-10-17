@@ -25,3 +25,4 @@ Route::get('/esPrimo', [Tema4Controller::class, 'esPrimo']);
 Route::get('/esBisiesto', [Tema4Controller::class, 'esBisiesto']);
 Route::get('/fibonacci', [Tema4Controller::class, 'fibonacci']);
 Route::get('/existeUser', [Tema4Controller::class, 'existeUsuario']);
+Route::get('/agregarUser', [Tema4Controller::class, 'agregarUsuario']);
