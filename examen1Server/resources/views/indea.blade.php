@@ -11,8 +11,9 @@
     @isset($validacion)
     <p>{{ $validacion }}</p>
     @endisset
-    <form action={{route('prueba')}} method="get">
-
+    <!--form action={ {route('prueba')}} method="get"> -->
+        <form action= "/examen1Server/public/agregasion" method="GET">
+            @csrf
         <label for="numero2">Ingrese los campos:</label>
         <input type="text" name="nombre" placeholder="nombre" required>
         <input type="text" name="apellido" placeholder="apellido" required>

@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    function agregarUsuario(Request $request){
+    function agregarUsuarioo(Request $request){
     $nombre = $request['nombre'];
     $apellido = $request['apellido'];
     $telefono = $request['telefono'];
     $mensaje = $request['mensaje'];
     if($nombre == null){
-        return view("index");
+        return view("indea");
     }
     $consulta = "INSERT INTO `users` (`Nombre`, `Apellido`, `Teléfono`, `Mensaje`) VALUES ('".$nombre."', '".$apellido."', '".$telefono."', '".$mensaje."');";
 
@@ -29,9 +29,7 @@ class UserController extends Controller
         $validacion = "Los datos no se han insertado, datos incorrectos";
     }
 
-
-
-    return view("index")->with(["validacion"=>$validacion]);
+    return view("indea")->with(["validacion"=>$validacion]);
     }
 
 }

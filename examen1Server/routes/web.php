@@ -6,5 +6,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/index', [UserController::class, 'agregarUsuario'])->name('prueba');
+Route::get('/agregasion', [UserController::class, 'agregarUsuarioo']);
+
+//->name('prueba');
 

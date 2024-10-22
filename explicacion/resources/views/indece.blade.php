@@ -11,7 +11,7 @@
     @isset($validacion)
     <p>{{ $validacion }}</p>
     @endisset
-    <form action="/explicacion/public/agregarUsuario" method="GET">
+    <form action="/explicacion/public/agregarUser" method="GET">
 
         <label for="numero2">Ingrese los campos:</label>
         <input type="text" name="nombre" placeholder="nombre" required>
