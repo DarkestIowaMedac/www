@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+/*document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.asiento').forEach(asiento => {
         asiento.addEventListener('click', () => {
             if (asiento.classList.contains('disponible')) {
@@ -9,4 +9,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
+});*/

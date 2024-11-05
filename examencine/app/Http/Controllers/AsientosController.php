@@ -11,22 +11,31 @@ class AsientosController extends Controller
     {
         $asientos = Asientos::orderBy('fila')->orderBy('columna')->get();
         $ocupados = Asientos::where('ocupado',1)->count();
-        return view('sala', compact('asientos'));
+        return view('sala', compact('asientos','ocupados'));
         // Es equivalente a return view('sala', ['asientos' => $asientos]);
         //compact se usa más a menudo cuando hay muchas variables a pasar y sus nombres en vista 'asientos' coincide
         //con el nombre de la variable $asientos. sería compact ('variable1', 'variable2')
     }
 
-    function reservar($i){
+    public function reservar($i){
         $asiento = Asientos::where('id',$i)->first();
-        $asiento->disponibilidad=1;
+        if ($asiento->ocupado == true){
+            $asiento->ocupado = false;
+        }
+        else{
+        $asiento->ocupado=true;
+        }
         $asiento->save();
+        return redirect('/sala');
     }
 
-    function anular($i){
-        $asiento = Asientos::where('id',$i)->first();
-        $asiento->disponibilidad=0;
-        $asiento->save();
-        // $asiento->delete();
+    public function aleatorio(){
+        $ocupados = Asientos::where('ocupado',false)->get();
+        $aleatorio = rand(0, $ocupados->count() - 1);
+        $asientoaleatorio = $ocupados[$aleatorio];
+        $asientoaleatorio->ocupado=true;
+        $asientoaleatorio->save();
+        return redirect('/sala');
     }
+
 }
