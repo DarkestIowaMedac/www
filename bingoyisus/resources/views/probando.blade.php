@@ -53,7 +53,7 @@
         </table>
     </div>
 
-    
+
         <div class=" bg-amber-900 flex flex-wrap justify-center py-4 px-4 border-solid border-8 rounded-3xl border-yellow-500 bg-opacity-40	" style="width: 500px; height:500px">
 
             @for ($i=1, $cont=1; $i<=9; $i++)
@@ -71,7 +71,7 @@
             <button id="boton" class=" py-4 bg-yellow-950 text-yellow-500 rounded-xl hover:bg-fuchsia-800 text-5xl px-10">Pulsar</button>
         </div>
     </div>
-    
+
     <iframe id="youtubeAudio" width="0" height="0" src="https://www.youtube.com/embed/hVQpuS97xvc?autoplay=1&mute=0&controls=0&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 </body>

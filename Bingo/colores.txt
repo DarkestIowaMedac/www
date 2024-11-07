@@ -1,0 +1,8 @@
+name: "Rojo Bingo", hex: "#FF3B3B", description: "Color principal para los números marcados" },
+  { name: "Azul Cartón", hex: "#2C7BE5", description: "Color de fondo para los cartones de bingo" },
+  { name: "Verde Premio", hex: "#21D4A7", description: "Color para resaltar premios y victorias" },
+  { name: "Amarillo Energía", hex: "#FFD43B", description: "Color de acento para elementos interactivos" },
+  { name: "Naranja Emoción", hex: "#FF8C42", description: "Color secundario para destacar información importante" },
+  { name: "Púrpura Lujo", hex: "#9D4EDD", description: "Color para elementos VIP o especiales" },
+  { name: "Gris Neutro", hex: "#6C757D", description: "Color para texto y elementos de interfaz secundarios" },
+  { name: "Blanco Fondo", hex: "#FFFFFF", description: "Color de fondo principal para la aplicación" },
