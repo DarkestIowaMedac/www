@@ -1,0 +1,79 @@
+    Creación, obtención y eliminación de cookies
+
+    - Creación de cookies
+
+setcookie()
+
+Es importante definir cuando expira. Para ello usamos time() que nos devuelve la hora actual, y le sumamos la duración.
+
+
+    - Obtención de cookies
+
+Las cookies se guardan en un array asociativo llamado $_COOKIE que se crea al actualizar la página. Con isset() podemos comprobar si una cookie está definida.
+
+
+    - eliminación de cookies
+
+unset()
+
+Borra una cookie del array $_COOKIES al recargar la web.
+
+
+    - Aceptar y habilitar cookies
+
+Aceptar cookies. Ejemplo:
+
+    <?php
+        if (isset($_GET['aceptar])) {
+            $caducidad = time() + (60 * 60 * 24 * 365);
+            setcookie('micookie', 1, $caducidad);
+        }
+    ?>
+
+    <!doctype html>
+    ...
+    <body>
+        <?php
+            if (!isset($_GET['aceptar']) && !isset($_COOKIE)) {
+                $caducidad = time() + (60 * 60 * 24 * 365);
+        ?>
+        <h2>Cookies</h2>
+        <p>Debes aceptar las cookies para poder seguir navegando</p>
+        <a href="?aceptar=1">Aceptar</a>
+
+        <?php
+            }
+        ?>
+
+Comprobar si las cookies están habilitadas en el navegador:
+
+    <?php
+        if (count($_COOKIE) > 0) {
+            echo "Cookies habilitadas";
+        } else {
+            echo "Cookies deshabilitadas";
+        }
+    ?>
+
+
+    - Sesiones:
+
+Una sesión es un conjunto de caracteres aleatorios que forma una identificación única para cada usuario. Las sesiones almacenan en el servidor y las cookies en el cliente.
+
+Método session_start():
+Inicia o reanuda sesión asignando un id único. Se coloca al principio del archivo.
+
+Método session_id():
+Obtiene o asigna un id. Debe ir antes del inicio de la sesión.
+
+Método session_name():
+Obtiene o asigna un nombre a la sesión. Si no se indica un nombre, se usa por defecto PHPSESSID (así definido en php.ini).
+
+Variables de sesión:
+Son variables que se guardan en el array asociativo $_SESSION y para destruir una variable se usa la función unset(). Las variables estarán activas hasta que se cierre la página.
+
+Método session_destroy():
+Destruye la información de una sesión. No elimina ni variables ni cookies de sesión. Las sesiones finalizan al cerrar el navegador.
+
+Método session_unset():
+Elimina una variable de $_SESSION.

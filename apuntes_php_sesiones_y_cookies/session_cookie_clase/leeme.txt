@@ -1,0 +1,3 @@
+Si abrimos en el navegador login, se crea una sesión, que a su vez crea una cookie en local.
+Ahora al abrir dashboard, el servidor comprueba si tenemos la cookie (la id, que es el código de su nombre)
+y el tal caso ejecuta el echo.
