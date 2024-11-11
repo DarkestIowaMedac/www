@@ -121,7 +121,7 @@ function generarNumerosCarton(){
             correcciontresceros = true;
         }
     }
-    
+
     if(correcciontresceros){
         espaciosdobles.push(0);
         columnasSeleccionadas.add(0);
@@ -135,7 +135,7 @@ function generarNumerosCarton(){
                 indice = getRandomInt(columnaseriegrandes.length);
                 clave = Object.keys(columnaseriegrandes[indice])[0];
             } while(columnasSeleccionadas.has(Number(clave)));
-            
+
             espaciosdobles.push(Number(clave));
             columnasSeleccionadas.add(Number(clave));
             correcciondosceros--;
@@ -144,7 +144,7 @@ function generarNumerosCarton(){
                 indice = getRandomInt(columnaserie.length);
                 clave = Object.keys(columnaserie[indice])[0];
             } while(columnasSeleccionadas.has(Number(clave)));
-            
+
             espaciosdobles.push(Number(clave));
             columnasSeleccionadas.add(Number(clave));
         }
@@ -175,7 +175,7 @@ function generarNumerosCarton(){
         let celda = numeroscolumna[columna][aleat];
         numerosaleatorios[columna].push(celda);
         numeroscolumna[columna].splice(aleat, 1);
-        
+
         if(!espaciosdobles.includes(columna)){
             aleat = getRandomInt(numeroscolumna[columna].length);
             celda = numeroscolumna[columna][aleat];
@@ -197,8 +197,10 @@ function generarNumerosCarton(){
     let dobleespacio2 = -1
     let dobleespacio3 = -1
     let correcciondosceros = 0
-    let clave
-
+    let clave = -1
+    let clave1 = -1
+    let clave2 = -1
+    let clave3 = -1
     for (let t = 0; t < columnaserie.length; t++){
         correcciontotal = Number(correcciontotal) + Number([Object.values(columnaserie[t])])
     }
@@ -212,7 +214,7 @@ function generarNumerosCarton(){
             correcciontresceros = true
         }
     }
-    
+
     if(correcciontresceros == true){
         dobleespacio1 = 0
         correcciontresceros = false
@@ -221,31 +223,37 @@ function generarNumerosCarton(){
     if(correcciondosceros > 0){
         dobleespacio1 = getRandomInt(columnaseriegrandes.length)
         clave = Object.keys(columnaseriegrandes[dobleespacio1])[0];
-        dobleespacio1 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
+        clave1 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
+        //!console.log(clave1+"0")
         correcciondosceros--
+        //!console.log(clave1+"1")
     }
     else{
         dobleespacio1 = getRandomInt(columnaserie.length)
+        //!console.log(dobleespacio1)
     }
+    //!console.log(clave1+"2")
     if(correcciondosceros > 0){
         do{
             dobleespacio2 = getRandomInt(columnaseriegrandes.length)
-        }while(dobleespacio2 == dobleespacio1)
+        }while(dobleespacio2 == clave1)
         clave = Object.keys(columnaseriegrandes[dobleespacio2])[0];
-        dobleespacio2 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
+        clave2 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
         correcciondosceros--
     }
+    //CONDICIÓN SI YA NO ES 0 PEEEERO EL DE ANTES ERA MÁS QUE 1
     else{
         do{
             dobleespacio2 = getRandomInt(columnaserie.length)
         }while(dobleespacio2 == dobleespacio1)
     }
+    //!console.log(clave1+"3")
     if(correcciondosceros > 0){
         do{
             dobleespacio3 = getRandomInt(columnaseriegrandes.length)
-        }while(dobleespacio3 == dobleespacio1 || dobleespacio3 == dobleespacio2)
+        }while(dobleespacio3 == clave1 || dobleespacio3 == clave2)
         clave = Object.keys(columnaseriegrandes[dobleespacio3])[0];
-        dobleespacio3 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
+        clave3 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
         correcciondosceros--
     }
     else{
@@ -253,16 +261,28 @@ function generarNumerosCarton(){
             dobleespacio3 = getRandomInt(columnaserie.length)
         }while(dobleespacio3 == dobleespacio1 || dobleespacio3 == dobleespacio2)
     }
+    if(clave1 != -1){
+        dobleespacio1 = clave1
+    }
+    if(clave2 != -1){
+        dobleespacio2 = clave2
+    }
+    if(clave3 != -1){
+        dobleespacio3 = clave3
+    }
+
+    //!console.log(clave1)
     // Vaya lio.. Esto accede mediante la única clave al valor correspondiente a dicha clave del elemento enésimo
     // del arreglo o array
+    console.log(columnaserie[dobleespacio1][Object.keys(columnaserie[dobleespacio1])[0]])
     columnaserie[dobleespacio1][Object.keys(columnaserie[dobleespacio1])[0]]--;
     columnaserie[dobleespacio2][Object.keys(columnaserie[dobleespacio2])[0]]--;
     columnaserie[dobleespacio3][Object.keys(columnaserie[dobleespacio3])[0]]--;
-    
+
     console.log(dobleespacio1+","+dobleespacio2+","+dobleespacio3)
     console.log(columnaserie)
 
-    // Por el contrario esto asigna dicha clave a una variable. La clave guarda la información de la columna, 
+    // Por el contrario esto asigna dicha clave a una variable. La clave guarda la información de la columna,
     // que luego usaremos para saber si meter dos datos o no.
     dobleespacio1 = Number(Object.keys(columnaserie[dobleespacio1])[0]);
     dobleespacio2 = Number(Object.keys(columnaserie[dobleespacio2])[0]);
@@ -300,7 +320,7 @@ function modificarEstilosCarton(tabla) {
     tabla.style.margin = '10px';
     tabla.style.backgroundColor = '#f0f0f0';
     tabla.style.padding = '10px';
-  
+
     const celdas = tabla.getElementsByTagName('td');
     for (let celda of celdas) {
       celda.style.width = '40px';
@@ -316,26 +336,26 @@ function modificarEstilosCarton(tabla) {
       celda.style.transition = 'all 0.3s ease';
       celda.style.cursor = celda.textContent ? 'pointer' : 'default';
       celda.style.color = '#FF8500';
-  
+
       if (celda.textContent) {
         celda.addEventListener('mouseover', () => {
           celda.style.backgroundColor = '#ffeb3b';
           celda.style.transform = 'scale(1.1)';
           celda.style.boxShadow = '0 0 5px rgba(0,0,0,0.2)';
         });
-  
+
         celda.addEventListener('mouseout', () => {
           celda.style.backgroundColor = '#fff';
           celda.style.transform = 'scale(1)';
           celda.style.boxShadow = 'none';
         });
-  
+
         celda.addEventListener('click', () => {
           celda.style.backgroundColor = celda.style.backgroundColor === 'rgb(76, 175, 80)' ? '#fff' : '#4CAF50';
         });
       }
     }
-  
+
     const caption = tabla.querySelector('caption');
     caption.style.captionSide = 'top';
     caption.style.marginBottom = '10px';
