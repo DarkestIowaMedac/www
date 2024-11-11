@@ -5,3 +5,53 @@
 table, th, td {
     border: 1px solid;
 }
+
+#bingo-ball {
+  transition: transform 0.3s ease-in-out;
+}
+
+#bingo-ball.animate {
+  animation: pop 3s ease-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.1) translateY(-250%); }
+  50% { transform: scale(1.2) translateY(+10%); }
+  70% { transform: scale(0.8) translateY(-30%); }
+  80% { transform: scale(0.9); }
+  90% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+#bingo-ball::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 70%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+#bingo-ball::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 70%, transparent, rgba(0, 0, 0, 0.3) 70%);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.bingo-ball-gradient {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+}
+
+.bingo-ball-shine {
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 70%);
+}
+
+.bingo-ball-shadow {
+  background: radial-gradient(circle at 70% 70%, transparent, rgba(0, 0, 0, 0.4) 70%);
+}
