@@ -7,11 +7,11 @@ let serie = 1
 let carton = 1
 let columnaserie = [
     {0: 3},
-    {1: 2},
-    {2: 2},
+    {1: 2},     // 1:1
+    {2: 2},   // 2:1
     {3: 2},
-    {4: 2},
-    {5: 2},
+    {4: 2},  // 4:2
+    {5: 2},  // 5:2
     {6: 2},
     {7: 2},
     {8: 1}
@@ -33,8 +33,8 @@ let columnaserie2 = JSON.parse(JSON.stringify(columnaserie))
 let numeroscolumna2 = JSON.parse(JSON.stringify(numeroscolumna))
 
 
-console.log(numeroscolumna2)
-console.log(columnaserie2)
+//!console.log(numeroscolumna2)
+//!console.log(columnaserie2)
 
 botonserie.addEventListener('click',() => {
     if(carton != 1){
@@ -62,7 +62,7 @@ boton.addEventListener('click', async() => {
         numero.textContent = arraynumeros[randomi]
         modificarEstilos(arraynumeros[randomi])
         arraynumeros.splice(randomi,1)
-        await sleep(2980)
+        await sleep(2970)
     }
 })
 
@@ -76,6 +76,9 @@ function crearCarton(){
     tabla.style.border = '1px solid black'
     tabla.style.borderCollapse = 'collapse'
     let numerosdelcarton = generarNumerosCarton()
+
+    numerosdelcarton = ordenarNumerosCarton(numerosdelcarton)
+
     for (let i = 0; i < 3; i++) {
         const fila = document.createElement('tr')
         for (let j = 0; j < 9; j++){
@@ -99,96 +102,26 @@ function crearCarton(){
 }
 
 botoncarton.addEventListener('click', (crearCarton))
-/*
-function generarNumerosCarton(){
-    let correcciontresceros = false;
-    let columnaseriegrandes = null;
-    let correcciontotal = 0;
-    let espaciosdobles = [];
-    let correcciondosceros = 0;
-    let columnasSeleccionadas = new Set();
 
-    for (let t = 0; t < columnaserie.length; t++){
-        correcciontotal = Number(correcciontotal) + Number([Object.values(columnaserie[t])])
-    }
-    if(correcciontotal <= 9){
-        columnaseriegrandes = columnaserie.filter(col => Number([Object.values(col)]) > 1);
-        console.log(columnaseriegrandes);
-        correcciondosceros = columnaseriegrandes.length;
-    }
-    else if(correcciontotal <= 12){
-        if(columnaserie[0][Object.keys(columnaserie[0])[0]] == 3){
-            correcciontresceros = true;
+function ordenarNumerosCarton(numeroscarton){
+    console.log(numeroscarton)
+    for (const columna of numeroscarton){
+        let columnafiltro = columna.filter(elemento => elemento > 0)
+        if(columnafiltro.length == 2){
+            if(columna[0]>columna[1]){
+                let auxiliar = columna[0]
+                columna[0] = columna[1]
+                columna[1] = auxiliar
+            }
         }
     }
-
-    if(correcciontresceros){
-        espaciosdobles.push(0);
-        columnasSeleccionadas.add(0);
-        correcciondosceros--;
-    }
-
-    while(espaciosdobles.length < 3){
-        let indice, clave;
-        if(correcciondosceros > 0){
-            do {
-                indice = getRandomInt(columnaseriegrandes.length);
-                clave = Object.keys(columnaseriegrandes[indice])[0];
-            } while(columnasSeleccionadas.has(Number(clave)));
-
-            espaciosdobles.push(Number(clave));
-            columnasSeleccionadas.add(Number(clave));
-            correcciondosceros--;
-        } else {
-            do {
-                indice = getRandomInt(columnaserie.length);
-                clave = Object.keys(columnaserie[indice])[0];
-            } while(columnasSeleccionadas.has(Number(clave)));
-
-            espaciosdobles.push(Number(clave));
-            columnasSeleccionadas.add(Number(clave));
-        }
-    }
-
-    console.log("Columnas seleccionadas para espacios dobles:", espaciosdobles);
-
-    // Decrementar los valores en columnaserie
-    for(let espacio of espaciosdobles){
-        let indice = columnaserie.findIndex(col => Number(Object.keys(col)[0]) === espacio);
-        if(indice !== -1){
-            columnaserie[indice][Object.keys(columnaserie[indice])[0]]--;
-        }
-    }
-
-    console.log("columnaserie después de decrementar:", columnaserie);
-
-    // Eliminar columnas con valor 0
-    for (let n = columnaserie.length - 1; n >= 0; n--){
-        if (Object.values(columnaserie[n])[0] == 0){
-            columnaserie.splice(n, 1);
-        }
-    }
-
-    let numerosaleatorios = Array(9).fill().map(() => []);
-    for (let columna = 0; columna <= 8; columna++){
-        let aleat = getRandomInt(numeroscolumna[columna].length);
-        let celda = numeroscolumna[columna][aleat];
-        numerosaleatorios[columna].push(celda);
-        numeroscolumna[columna].splice(aleat, 1);
-
-        if(!espaciosdobles.includes(columna)){
-            aleat = getRandomInt(numeroscolumna[columna].length);
-            celda = numeroscolumna[columna][aleat];
-            numerosaleatorios[columna].push(celda);
-            numeroscolumna[columna].splice(aleat, 1);
-        } else {
-            numerosaleatorios[columna].push(0);
-        }
-        numerosaleatorios[columna].push(0);
-    }
-    return numerosaleatorios;
+    return numeroscarton
 }
-*/
+
+function decidirNulos(numeroscarton){
+    return 0
+}
+
 function generarNumerosCarton(){
     let correcciontresceros = false
     let columnaseriegrandes = null
@@ -209,7 +142,7 @@ function generarNumerosCarton(){
     }
     if(correcciontotal <= 9){
         columnaseriegrandes = columnaserie.filter(columnaserie => Number([Object.values(columnaserie)]) > 1)
-        console.log(columnaseriegrandes)
+        //!console.log(columnaseriegrandes)
         correcciondosceros = columnaseriegrandes.length
     }
     else if(correcciontotal <= 12){
@@ -295,13 +228,13 @@ function generarNumerosCarton(){
     //!console.log(clave1)
     // Vaya lio.. Esto accede mediante la única clave al valor correspondiente a dicha clave del elemento enésimo
     // del arreglo o array
-    console.log(columnaserie[dobleespacio1][Object.keys(columnaserie[dobleespacio1])[0]])
+    //!console.log(columnaserie[dobleespacio1][Object.keys(columnaserie[dobleespacio1])[0]])
     columnaserie[dobleespacio1][Object.keys(columnaserie[dobleespacio1])[0]]--;
     columnaserie[dobleespacio2][Object.keys(columnaserie[dobleespacio2])[0]]--;
     columnaserie[dobleespacio3][Object.keys(columnaserie[dobleespacio3])[0]]--;
 
-    console.log(dobleespacio1+","+dobleespacio2+","+dobleespacio3)
-    console.log(columnaserie)
+    //!console.log(dobleespacio1+","+dobleespacio2+","+dobleespacio3)
+    //!console.log(columnaserie)
 
     // Por el contrario esto asigna dicha clave a una variable. La clave guarda la información de la columna,
     // que luego usaremos para saber si meter dos datos o no.
@@ -314,6 +247,7 @@ function generarNumerosCarton(){
             columnaserie.splice(n,1)
         }
     }
+
     let numerosaleatorios = [[],[],[],[],[],[],[],[],[]]
     for (let columna = 0; columna<=8; columna++){
         let aleat = getRandomInt(numeroscolumna[columna].length);
