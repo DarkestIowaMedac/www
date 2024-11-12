@@ -90,8 +90,8 @@ function crearCarton(){
     if(carton == 6){
         carton = 1
         serie++
-        columnaserie = columnaserie2
-        numeroscolumna = numeroscolumna2
+        columnaserie = JSON.parse(JSON.stringify(columnaserie2))
+        numeroscolumna = JSON.parse(JSON.stringify(numeroscolumna2))
     }
     else{
         carton++
@@ -201,6 +201,9 @@ function generarNumerosCarton(){
     let clave1 = -1
     let clave2 = -1
     let clave3 = -1
+    let clave1modificada = false
+    let clave2modificada = false
+
     for (let t = 0; t < columnaserie.length; t++){
         correcciontotal = Number(correcciontotal) + Number([Object.values(columnaserie[t])])
     }
@@ -227,6 +230,7 @@ function generarNumerosCarton(){
         //!console.log(clave1+"0")
         correcciondosceros--
         //!console.log(clave1+"1")
+        clave1modificada = true
     }
     else{
         dobleespacio1 = getRandomInt(columnaserie.length)
@@ -236,10 +240,16 @@ function generarNumerosCarton(){
     if(correcciondosceros > 0){
         do{
             dobleespacio2 = getRandomInt(columnaseriegrandes.length)
-        }while(dobleespacio2 == clave1)
+        }while(dobleespacio2 == dobleespacio1)
         clave = Object.keys(columnaseriegrandes[dobleespacio2])[0];
         clave2 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
         correcciondosceros--
+        clave2modificada = true
+    }
+    else if(clave1modificada){
+        do{
+            dobleespacio2 = getRandomInt(columnaserie.length)
+        }while(dobleespacio2 == clave1)
     }
     //CONDICIÓN SI YA NO ES 0 PEEEERO EL DE ANTES ERA MÁS QUE 1
     else{
@@ -251,16 +261,27 @@ function generarNumerosCarton(){
     if(correcciondosceros > 0){
         do{
             dobleespacio3 = getRandomInt(columnaseriegrandes.length)
-        }while(dobleespacio3 == clave1 || dobleespacio3 == clave2)
+        }while(dobleespacio3 == dobleespacio1 || dobleespacio3 == dobleespacio2)
         clave = Object.keys(columnaseriegrandes[dobleespacio3])[0];
         clave3 = columnaserie.findIndex(col => Object.keys(col)[0] === clave);
         correcciondosceros--
+    }
+    else if(clave2modificada){
+        do{
+            dobleespacio3 = getRandomInt(columnaserie.length)
+        }while(dobleespacio3 == clave1 || dobleespacio3 == clave2)
+    }
+    else if(clave1modificada){
+        do{
+            dobleespacio3 = getRandomInt(columnaserie.length)
+        }while(dobleespacio3 == clave1 || dobleespacio3 == dobleespacio2)
     }
     else{
         do{
             dobleespacio3 = getRandomInt(columnaserie.length)
         }while(dobleespacio3 == dobleespacio1 || dobleespacio3 == dobleespacio2)
     }
+
     if(clave1 != -1){
         dobleespacio1 = clave1
     }
