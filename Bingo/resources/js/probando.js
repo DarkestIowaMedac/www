@@ -79,6 +79,8 @@ function crearCarton(){
 
     numerosdelcarton = ordenarNumerosCarton(numerosdelcarton)
 
+    numerosdelcarton = decidirNulos(numerosdelcarton)
+
     for (let i = 0; i < 3; i++) {
         const fila = document.createElement('tr')
         for (let j = 0; j < 9; j++){
@@ -119,7 +121,60 @@ function ordenarNumerosCarton(numeroscarton){
 }
 
 function decidirNulos(numeroscarton){
-    return 0
+    var cuentanumeros = [0,0,0]
+    var cuentanulos = [0,0,0]
+    var elementosporfila = [1,1,1,1,1,1,1,1,1]
+    
+    for (let k = 0; k<numeroscarton.length; k++){
+        let nonulos
+        nonulos = numeroscarton[k].filter(num => num != 0)
+        elementosporfila[k] = nonulos.length
+    }
+
+    if(elementosporfila[0] == 1){
+        let aleator = getRandomInt(3)
+        numeroscarton[0] = cambiar0porX(numeroscarton[0], aleator)
+    }
+    else{
+        let aleator = getRandomInt(3)
+        numeroscarton[0] = cambiar2porX(numeroscarton[0], aleator)
+    }
+}
+
+function cambiar2porX(lacolumna, cambio){
+    if (cambio != 2){
+        let auxiliar = lacolumna[cambio]
+        lacolumna[cambio] = lacolumna[2]
+        lacolumna[2] = auxiliar
+    }
+    
+    for (let i = 0; i<3; i++){
+        if(i == cambio){
+            cuentanulos[i]++
+        }
+        else{
+            cuentanumeros[i]++
+        }
+    }
+    return lacolumna
+}
+
+function cambiar0porX(lacolumna, cambio){
+    if (cambio != 0){
+        let auxiliar = lacolumna[cambio]
+        lacolumna[cambio] = lacolumna[0]
+        lacolumna[0] = auxiliar
+    }
+
+    for (let i = 0; i<3; i++){
+        if(i == cambio){
+            cuentanumeros[i]++
+        }
+        else{
+            cuentanulos[i]++
+        }
+    }
+    return lacolumna
 }
 
 function generarNumerosCarton(){
