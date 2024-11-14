@@ -139,20 +139,26 @@ function ordenarNumerosCarton(numeroscarton){
     return numeroscarton
 }
 
+
 function decidirNulos(numeroscarton){
+    let intentos = 30
     let elementosporcolumna = [1,1,1,1,1,1,1,1,1]
-    cuentanumeros = [0,0,0]
-    cuentanulos = [0,0,0]
-    let aleatorios = []
-    let aleator
-
-    //Columna 0 
-
     for (let k = 0; k<numeroscarton.length; k++){
         let nonulos
         nonulos = numeroscarton[k].filter(num => num != 0)
         elementosporcolumna[k] = nonulos.length
     }
+    let numeroscarton2 = [...numeroscarton]
+    let tiene5 = false
+    while(tiene5 == false && intentos>0){
+    numeroscarton = [...numeroscarton2]
+    cuentanumeros = [0,0,0]
+    cuentanulos = [0,0,0]
+    let aleatorios = []
+    let aleator
+
+    //Columna 0
+
 
     if(elementosporcolumna[0] == 1){
         aleator = getRandomInt(3)
@@ -270,14 +276,14 @@ function decidirNulos(numeroscarton){
 
     //Columna8
 
-   
+
     let numseguidos = true
     let nulosseguidos = true
     while(numseguidos || nulosseguidos){
         numseguidos = false
         nulosseguidos = false
         aleator = getRandomInt(3)
-    
+
         if(elementosporcolumna[8] == 1){
             numeroscarton[8] = cambiar0porX(numeroscarton[8], aleator)
         }
@@ -298,7 +304,7 @@ function decidirNulos(numeroscarton){
             }
         }
         if(numseguidos || nulosseguidos){
-            
+
             if(elementosporcolumna[8] == 1){
                 numeroscarton[8] = cambiar0porX(numeroscarton[8], aleator,true)
                 }
@@ -310,7 +316,9 @@ function decidirNulos(numeroscarton){
             }
             console.log("DespuésDeCorregir"+numeroscarton[8])
         }
-        
+    }
+    tiene5 = tiene5encada(numeroscarton)
+    intentos--
     }
     return numeroscarton
 }
@@ -325,6 +333,21 @@ function cambiarcorreccion(lacolumna){
     let auxiliar = lacolumna[1]
     lacolumna[1] = lacolumna[2]
     lacolumna[2] = auxiliar
+}
+
+function tiene5encada(numeroscarton) {
+    let filas = [0, 0, 0];
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (numeroscarton[i][j] != 0) {
+          filas[j]++;
+        }
+      }
+    }
+    console.log("Números por fila:", filas);
+    //return filas[0] == 5 && filas[1] == 5 && filas[2] == 5;
+    return true
+
 }
 
 function cambiar2porX(lacolumna, cambio, deshacer=false){
@@ -588,14 +611,14 @@ function modificarEstilosCarton(tabla) {
 function modificarEstilosCeldaCarton(numero) {
     // Seleccionar todas las celdas de todos los cartones
     const celdas = document.querySelectorAll('#cartones td');
-    
+
     celdas.forEach(celda => {
       if (celda.textContent == numero) {
         // Aplicar estilos para marcar la celda
         celda.style.backgroundColor = '#4CAF50';
         celda.style.color = '#fff';
         //celda.style.textDecoration = 'line-through';
-        
+
         // Añadir una animación de resaltado
         celda.animate([
             { transform: 'rotate(-35deg) scale(1)', backgroundColor: '#4CAF50' },
