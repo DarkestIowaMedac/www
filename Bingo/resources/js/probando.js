@@ -2,7 +2,7 @@ const numero = document.querySelector('#contador')
 const boton = document.querySelector('#botonjugar')
 const botoncarton = document.querySelector('#botoncarton')
 const botonserie = document.querySelector('#botonserie')
-
+let todosloscartones = []
 
 let cuentanumeros = [0,0,0]
 let cuentanulos = [0,0,0]
@@ -65,6 +65,7 @@ boton.addEventListener('click', async() => {
         let randomi = getRandomInt(arraynumeros.length)
         numero.textContent = arraynumeros[randomi]
         modificarEstilos(arraynumeros[randomi])
+        modificarEstilosCeldaCarton(arraynumeros[randomi])
         arraynumeros.splice(randomi,1)
         await sleep(2970)
     }
@@ -98,6 +99,7 @@ function crearCarton(){
     }
     cartones.appendChild(tabla)
     modificarEstilosCarton(tabla);
+    todosloscartones.push(numerosdelcarton)
     if(carton == 6){
         carton = 1
         serie++
@@ -143,6 +145,9 @@ function decidirNulos(numeroscarton){
     cuentanulos = [0,0,0]
     let aleatorios = []
     let aleator
+
+    //Columna 0 
+
     for (let k = 0; k<numeroscarton.length; k++){
         let nonulos
         nonulos = numeroscarton[k].filter(num => num != 0)
@@ -163,6 +168,8 @@ function decidirNulos(numeroscarton){
     }
     aleatorios.push(aleator)
 
+
+    //Columna 1
     let cercanas1 = elementosporcolumna[1] == 1 && elementosporcolumna[2] == 1 && elementosporcolumna[0] == 1
     let cercanas2 = elementosporcolumna[1] == 2 && elementosporcolumna[2] == 2 && elementosporcolumna[0] == 2
 
@@ -188,6 +195,8 @@ function decidirNulos(numeroscarton){
 
     console.log(cuentanumeros+"nums")
     console.log(cuentanulos+"nuls")
+
+    //Columnas 2 a 7
     for (let columna = 2; columna<8; columna++){
         let cercanasi = elementosporcolumna[columna] == 1 && elementosporcolumna[columna-1] == 1 && elementosporcolumna[columna+1] == 1
         let cercanasj = elementosporcolumna[columna] == 2 && elementosporcolumna[columna-1] == 2 && elementosporcolumna[columna+1] == 2
@@ -230,6 +239,7 @@ function decidirNulos(numeroscarton){
             console.log(cuentanulos+"nuls")
             console.log(numseguidos)
             console.log(nulosseguidos)
+            console.log("Numeros"+numeroscarton[columna])
 
             if(numseguidos || nulosseguidos){
                 console.log(numeroscarton[columna])
@@ -242,23 +252,65 @@ function decidirNulos(numeroscarton){
                         cambiarcorreccion2(numeroscarton[columna])
                     }
                 }
-                console.log(numeroscarton[columna])
+                console.log("DespuésDeCorregir"+numeroscarton[columna])
             }
             else{
                 aleatorios.push(aleator)
+                numeroscarton[columna-2].forEach((numero,indc) => {
+                    if(numero == 0){
+                        cuentanulos[indc]--
+                    }
+                    else{
+                        cuentanumeros[indc]--
+                    }
+                });
             }
+        }
+    }
 
+    //Columna8
 
-            numeroscarton[columna-2].forEach((numero,indc) => {
-                if(numero == 0){
-                    cuentanulos[indc]--
+   
+    let numseguidos = true
+    let nulosseguidos = true
+    while(numseguidos || nulosseguidos){
+        numseguidos = false
+        nulosseguidos = false
+        aleator = getRandomInt(3)
+    
+        if(elementosporcolumna[8] == 1){
+            numeroscarton[8] = cambiar0porX(numeroscarton[8], aleator)
+        }
+        else{
+            numeroscarton[8] = cambiar2porX(numeroscarton[8], aleator)
+            if(aleator == 0){
+                cambiarcorreccion(numeroscarton[8])
+            }
+        }
+        for (const elem of cuentanumeros){
+            if(elem == 3){
+                numseguidos = true
+            }
+        }
+        for (const elem2 of cuentanulos){
+            if(elem2 == 3){
+                nulosseguidos = true
+            }
+        }
+        if(numseguidos || nulosseguidos){
+            
+            if(elementosporcolumna[8] == 1){
+                numeroscarton[8] = cambiar0porX(numeroscarton[8], aleator,true)
                 }
                 else{
-                    cuentanumeros[indc]--
+                numeroscarton[8] = cambiar2porX(numeroscarton[8], aleator,true)
+                if(aleator == 0){
+                    cambiarcorreccion2(numeroscarton[8])
                 }
-            });
-
+            }
+            console.log("DespuésDeCorregir"+numeroscarton[8])
         }
+        
     }
     return numeroscarton
 }
@@ -531,6 +583,31 @@ function modificarEstilosCarton(tabla) {
     caption.style.color = '#333';
     caption.style.textTransform = 'uppercase';
     caption.style.letterSpacing = '1px';
+}
+
+function modificarEstilosCeldaCarton(numero) {
+    // Seleccionar todas las celdas de todos los cartones
+    const celdas = document.querySelectorAll('#cartones td');
+    
+    celdas.forEach(celda => {
+      if (celda.textContent == numero) {
+        // Aplicar estilos para marcar la celda
+        celda.style.backgroundColor = '#4CAF50';
+        celda.style.color = '#fff';
+        //celda.style.textDecoration = 'line-through';
+        
+        // Añadir una animación de resaltado
+        celda.animate([
+            { transform: 'rotate(-35deg) scale(1)', backgroundColor: '#4CAF50' },
+            { transform: 'rotate(-17.5deg) scale(1.5)', backgroundColor: '#45a049' },
+            { transform: 'rotate(0deg) scale(1)', backgroundColor: '#4CAF50' }
+        ], {
+          duration: 500,
+          iterations: 1,
+          easing: 'ease-out'
+        });
+      }
+    });
   }
 
 function modificarEstilos(numero){
@@ -592,123 +669,4 @@ const sleep = function (ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-/*
-function decidirNulos(numeroscarton) {
-    let elementosporcolumna = numeroscarton.map(col => col.filter(num => num != 0).length);
-    let cuentanumeros = [0, 0, 0];
-    let cuentanulos = [0, 0, 0];
-    let aleatorios = [];
 
-    for (let columna = 0; columna < 9; columna++) {
-        let intentos = 0;
-        let valido = false;
-
-        while (!valido && intentos < 10) {
-            let aleator = getRandomInt(3);
-
-            // Evitar aleatorios repetidos en columnas adyacentes
-            if (columna > 0 && aleator === aleatorios[columna - 1]) {
-                intentos++;
-                continue;
-            }
-
-            let nuevaColumna;
-            if (elementosporcolumna[columna] === 1) {
-                nuevaColumna = cambiar0porX(numeroscarton[columna], aleator, false, cuentanumeros, cuentanulos);
-            } else {
-                nuevaColumna = cambiar2porX(numeroscarton[columna], aleator, false, cuentanumeros, cuentanulos);
-                if (aleator === 0) {
-                    cambiarcorreccion(nuevaColumna);
-                }
-            }
-
-            if (esValido(numeroscarton, columna, nuevaColumna, cuentanumeros, cuentanulos)) {
-                numeroscarton[columna] = nuevaColumna;
-                aleatorios.push(aleator);
-                valido = true;
-            } else {
-                // Deshacer los cambios en los contadores
-                if (elementosporcolumna[columna] === 1) {
-                    cambiar0porX(nuevaColumna, aleator, true, cuentanumeros, cuentanulos);
-                } else {
-                    cambiar2porX(nuevaColumna, aleator, true, cuentanumeros, cuentanulos);
-                }
-                intentos++;
-            }
-        }
-
-        if (!valido) {
-            // Si no se encuentra una configuración válida, retroceder
-            return decidirNulos(numeroscarton);
-        }
-
-        // Actualizar contadores para la columna anterior
-        if (columna >= 2) {
-            actualizarContadores(numeroscarton[columna - 2], cuentanumeros, cuentanulos, false);
-        }
-    }
-
-    return numeroscarton;
-}
-
-function esValido(numeroscarton, columnaActual, nuevaColumna, cuentanumeros, cuentanulos) {
-    let tempCarton = [...numeroscarton];
-    tempCarton[columnaActual] = nuevaColumna;
-
-    // Verificar filas
-    for (let fila = 0; fila < 3; fila++) {
-        let consecutivos = 0;
-        for (let col = Math.max(0, columnaActual - 2); col <= Math.min(8, columnaActual); col++) {
-            if (tempCarton[col][fila] === 0) {
-                consecutivos++;
-            } else {
-                consecutivos = 0;
-            }
-            if (consecutivos >= 3) return false;
-        }
-    }
-
-    // Verificar columnas
-    for (let i = 0; i < 3; i++) {
-        if (cuentanumeros[i] >= 3 || cuentanulos[i] >= 3) return false;
-    }
-
-    return true;
-}
-
-function cambiar0porX(lacolumna, cambio, deshacer, cuentanumeros, cuentanulos) {
-    let nuevaColumna = [...lacolumna];
-    if (cambio !== 0) {
-        [nuevaColumna[0], nuevaColumna[cambio]] = [nuevaColumna[cambio], nuevaColumna[0]];
-    }
-    actualizarContadores(nuevaColumna, cuentanumeros, cuentanulos, deshacer);
-    return nuevaColumna;
-}
-
-function cambiar2porX(lacolumna, cambio, deshacer, cuentanumeros, cuentanulos) {
-    let nuevaColumna = [...lacolumna];
-    if (cambio !== 2) {
-        [nuevaColumna[2], nuevaColumna[cambio]] = [nuevaColumna[cambio], nuevaColumna[2]];
-    }
-    actualizarContadores(nuevaColumna, cuentanumeros, cuentanulos, deshacer);
-    return nuevaColumna;
-}
-
-function actualizarContadores(columna, cuentanumeros, cuentanulos, deshacer) {
-    columna.forEach((numero, index) => {
-        if (numero === 0) {
-            deshacer ? cuentanulos[index]-- : cuentanulos[index]++;
-        } else {
-            deshacer ? cuentanumeros[index]-- : cuentanumeros[index]++;
-        }
-    });
-}
-
-function cambiarcorreccion(lacolumna) {
-    [lacolumna[1], lacolumna[2]] = [lacolumna[2], lacolumna[1]];
-}
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-*/
