@@ -111,7 +111,13 @@ function crearCarton(){
     }
 }
 
-botoncarton.addEventListener('click', (crearCarton))
+botoncarton.addEventListener('click', () =>  {
+    crearCarton()
+
+
+    //Lógica para crear Carton de nuevo si el cartón no es el adecuado. Reorganizar las funciones anteriores
+
+})
 
 function reemplazar0porcomas(numeroscarton){
     numeroscarton.forEach((columna,c) => {
@@ -150,7 +156,7 @@ function decidirNulos(numeroscarton){
     }
     let numeroscarton2 = [...numeroscarton]
     let tiene5 = false
-    while(tiene5 == false && intentos>0){
+    while(tiene5 == false){
     numeroscarton = [...numeroscarton2]
     cuentanumeros = [0,0,0]
     cuentanulos = [0,0,0]
@@ -208,7 +214,10 @@ function decidirNulos(numeroscarton){
         let cercanasj = elementosporcolumna[columna] == 2 && elementosporcolumna[columna-1] == 2 && elementosporcolumna[columna+1] == 2
         let numseguidos = true
         let nulosseguidos = true
-        while(numseguidos || nulosseguidos){
+        let intentosco = 5
+        while((numseguidos || nulosseguidos)){
+            intentosco--
+            console.log("INTENTOSCO"+intentosco)
             numseguidos = false
             nulosseguidos = false
             if(cercanasi || cercanasj){
@@ -231,6 +240,7 @@ function decidirNulos(numeroscarton){
             }
 
             for (const elem of cuentanumeros){
+                console.log(elem)
                 if(elem == 3){
                     numseguidos = true
                 }
@@ -246,7 +256,9 @@ function decidirNulos(numeroscarton){
             console.log(numseguidos)
             console.log(nulosseguidos)
             console.log("Numeros"+numeroscarton[columna])
-
+            if(intentos == 0){
+                console.log("intengos agotados")
+            }
             if(numseguidos || nulosseguidos){
                 console.log(numeroscarton[columna])
                 if(elementosporcolumna[columna] == 1){
@@ -279,7 +291,10 @@ function decidirNulos(numeroscarton){
 
     let numseguidos = true
     let nulosseguidos = true
-    while(numseguidos || nulosseguidos){
+    let intentosco8 = 5
+    while((numseguidos || nulosseguidos) && intentosco8>0){
+        intentosco8--
+        console.log("INTENTOSCO8"+intentosco8)
         numseguidos = false
         nulosseguidos = false
         aleator = getRandomInt(3)

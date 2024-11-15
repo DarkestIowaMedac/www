@@ -32,7 +32,7 @@ class AsientosController extends Controller
         return redirect('/asiento')->withErrors($validator);
     }
 
-
+    //Index, store, update, destroy
     public function rules(){
         $rules = [
             'nombre' => 'required|max:100|string',
@@ -53,3 +53,13 @@ class AsientosController extends Controller
 }
 //"composer require php-flasher/flasher-toastr-laravel
 //php artisan flasher:install
+
+
+//Salacontroller:
+/*
+    $s1 = new Sala();
+
+    $s1['nombre']="Sala1";
+
+    
+*/
