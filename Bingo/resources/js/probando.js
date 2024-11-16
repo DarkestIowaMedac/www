@@ -81,25 +81,45 @@ function crearCarton(){
     tabla.style.border = '1px solid black'
     tabla.style.borderCollapse = 'collapse'
     let numerosdelcarton = generarNumerosCarton()
+    
+    let numerosdelcarton3 = ordenarNumerosCarton(numerosdelcarton)
+    console.log(""+numerosdelcarton3)
+    let numerosdelcarton2
+    let tiene5 = false
+    let i = 0
+    while(tiene5 == false){
+        numerosdelcarton2 = [[],[],[],[],[],[],[],[],[]]
+        numerosdelcarton3.forEach((fila,i) => {
+            numerosdelcarton3[i].forEach((elemento,j) => {
+                numerosdelcarton2[i].push(numerosdelcarton3[i][j])
+            });   
+            
+        });
+        console.log(""+numerosdelcarton2)
+        console.log(""+numerosdelcarton3)
+        console.log("se llega")
+        numerosdelcarton2 = decidirNulos(numerosdelcarton2)
+        tiene5 = tiene5encada(numerosdelcarton2)
+        console.log(tiene5)
+        console.log(i+"hoeafphae")
+        i++
+    }
+   
 
-    numerosdelcarton = ordenarNumerosCarton(numerosdelcarton)
-
-    numerosdelcarton = decidirNulos(numerosdelcarton)
-
-    numerosdelcarton = reemplazar0porcomas(numerosdelcarton)
+    numerosdelcarton2 = reemplazar0porcomas(numerosdelcarton2)
 
     for (let i = 0; i < 3; i++) {
         const fila = document.createElement('tr')
         for (let j = 0; j < 9; j++){
             const celda = document.createElement('td')
-            celda.textContent = numerosdelcarton[j][i]
+            celda.textContent = numerosdelcarton2[j][i]
             fila.appendChild(celda)
         }
         tabla.appendChild(fila)
     }
     cartones.appendChild(tabla)
     modificarEstilosCarton(tabla);
-    todosloscartones.push(numerosdelcarton)
+    todosloscartones.push(numerosdelcarton2)
     if(carton == 6){
         carton = 1
         serie++
@@ -131,7 +151,7 @@ function reemplazar0porcomas(numeroscarton){
 }
 
 function ordenarNumerosCarton(numeroscarton){
-    console.log(numeroscarton)
+    //!console.log(numeroscarton)
     for (const columna of numeroscarton){
         let columnafiltro = columna.filter(elemento => elemento > 0)
         if(columnafiltro.length == 2){
@@ -147,17 +167,14 @@ function ordenarNumerosCarton(numeroscarton){
 
 
 function decidirNulos(numeroscarton){
-    let intentos = 30
     let elementosporcolumna = [1,1,1,1,1,1,1,1,1]
     for (let k = 0; k<numeroscarton.length; k++){
         let nonulos
         nonulos = numeroscarton[k].filter(num => num != 0)
         elementosporcolumna[k] = nonulos.length
     }
-    let numeroscarton2 = [...numeroscarton]
-    let tiene5 = false
-    while(tiene5 == false){
-    numeroscarton = [...numeroscarton2]
+
+
     cuentanumeros = [0,0,0]
     cuentanulos = [0,0,0]
     let aleatorios = []
@@ -205,8 +222,8 @@ function decidirNulos(numeroscarton){
         }
     }
 
-    console.log(cuentanumeros+"nums")
-    console.log(cuentanulos+"nuls")
+    //!console.log(cuentanumeros+"nums")
+    //!console.log(cuentanulos+"nuls")
 
     //Columnas 2 a 7
     for (let columna = 2; columna<8; columna++){
@@ -214,10 +231,10 @@ function decidirNulos(numeroscarton){
         let cercanasj = elementosporcolumna[columna] == 2 && elementosporcolumna[columna-1] == 2 && elementosporcolumna[columna+1] == 2
         let numseguidos = true
         let nulosseguidos = true
-        let intentosco = 5
+        
         while((numseguidos || nulosseguidos)){
-            intentosco--
-            console.log("INTENTOSCO"+intentosco)
+           
+
             numseguidos = false
             nulosseguidos = false
             if(cercanasi || cercanasj){
@@ -240,7 +257,7 @@ function decidirNulos(numeroscarton){
             }
 
             for (const elem of cuentanumeros){
-                console.log(elem)
+                //!console.log(elem)
                 if(elem == 3){
                     numseguidos = true
                 }
@@ -250,17 +267,15 @@ function decidirNulos(numeroscarton){
                     nulosseguidos = true
                 }
             }
-            console.log("COLUMNA "+columna)
-            console.log(cuentanumeros+"nums")
-            console.log(cuentanulos+"nuls")
-            console.log(numseguidos)
-            console.log(nulosseguidos)
-            console.log("Numeros"+numeroscarton[columna])
-            if(intentos == 0){
-                console.log("intengos agotados")
-            }
+            //!console.log("COLUMNA "+columna)
+            //!console.log(cuentanumeros+"nums")
+            //!console.log(cuentanulos+"nuls")
+            //!console.log(numseguidos)
+            //!console.log(nulosseguidos)
+            //!console.log("Numeros"+numeroscarton[columna])
+
             if(numseguidos || nulosseguidos){
-                console.log(numeroscarton[columna])
+                //!console.log(numeroscarton[columna])
                 if(elementosporcolumna[columna] == 1){
                     numeroscarton[columna] = cambiar0porX(numeroscarton[columna], aleator,true)
                     }
@@ -270,7 +285,7 @@ function decidirNulos(numeroscarton){
                         cambiarcorreccion2(numeroscarton[columna])
                     }
                 }
-                console.log("DespuésDeCorregir"+numeroscarton[columna])
+                //!console.log("DespuésDeCorregir"+numeroscarton[columna])
             }
             else{
                 aleatorios.push(aleator)
@@ -291,10 +306,7 @@ function decidirNulos(numeroscarton){
 
     let numseguidos = true
     let nulosseguidos = true
-    let intentosco8 = 5
-    while((numseguidos || nulosseguidos) && intentosco8>0){
-        intentosco8--
-        console.log("INTENTOSCO8"+intentosco8)
+    while((numseguidos || nulosseguidos)){
         numseguidos = false
         nulosseguidos = false
         aleator = getRandomInt(3)
@@ -329,11 +341,8 @@ function decidirNulos(numeroscarton){
                     cambiarcorreccion2(numeroscarton[8])
                 }
             }
-            console.log("DespuésDeCorregir"+numeroscarton[8])
+            //?console.log("DespuésDeCorregir"+numeroscarton[8])
         }
-    }
-    tiene5 = tiene5encada(numeroscarton)
-    intentos--
     }
     return numeroscarton
 }
@@ -351,6 +360,8 @@ function cambiarcorreccion(lacolumna){
 }
 
 function tiene5encada(numeroscarton) {
+    console.log(numeroscarton)
+    console.log("loquevadespues")
     let filas = [0, 0, 0];
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 3; j++) {
@@ -360,8 +371,8 @@ function tiene5encada(numeroscarton) {
       }
     }
     console.log("Números por fila:", filas);
-    //return filas[0] == 5 && filas[1] == 5 && filas[2] == 5;
-    return true
+    return filas[0] == 5 && filas[1] == 5 && filas[2] == 5
+    //return true
 
 }
 
