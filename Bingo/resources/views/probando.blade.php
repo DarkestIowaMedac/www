@@ -43,12 +43,19 @@
                     <div class="absolute inset-0 bg-white/5 rounded-full transform scale-105 blur-sm transition-transform duration-300 ease-in-out group-hover:scale-110"></div>
                     <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300 ease-in-out"></div>
                 </div>
+                <div id="botonsitos" class="container mx-auto px-4 flex flex-col sm:flex-row justify-center items-center gap-4">
                 <button id="botonjugar" class="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-xl shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
-                    Jugar
+                    Juego Digital
                 </button>
+                <button id="botonjugar2" class="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-xl shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
+                    Juego Clásico
+                </button>
+                </div>
+                <div id="botonsitos2" class="container mx-auto px-4 flex flex-col sm:flex-row justify-center items-center gap-6">
                 <button id="botoncarton" class="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-xl shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
                     Generar Cartón
                 </button>
+                </div>
                 <button id="botonserie" class="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-xl shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
                     Generar Serie
                 </button>

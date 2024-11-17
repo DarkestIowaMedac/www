@@ -1,8 +1,22 @@
 const numero = document.querySelector('#contador')
 const boton = document.querySelector('#botonjugar')
+const boton2 = document.querySelector('#botonjugar2')
 const botoncarton = document.querySelector('#botoncarton')
 const botonserie = document.querySelector('#botonserie')
+let divanexar = document.querySelector('#botonsitos2')
+let jugable = true
+let juegovalido = 0
+
 let todosloscartones = []
+
+let lineasmaximas = 3
+let bingosmaximos = 1
+
+let primerawait = 6030
+let segundoawait = 2970
+
+let cartonescantaronlinea = []
+let cartonescantaronbingo = []
 
 let cuentanumeros = [0,0,0]
 let cuentanulos = [0,0,0]
@@ -50,26 +64,155 @@ botonserie.addEventListener('click',() => {
     for (let i = 0; i < 6; i++) {
         crearCarton()
     }
-
+    juegovalido = juegovalido + 6
 })
 boton.addEventListener('click', async() => {
+    if(juegovalido<2){
+        alert("Con esto no podemos jugar, genera cartones o series")
+    }
+    else{
+    if(jugable == true){
+        jugable = false
     const imagenrueda = document.querySelector('#activarrueda')
     imagenrueda.style.backgroundImage = "url('../imagenes/bingoeditado.png')"
+
+    botoncarton.style.display = 'none';
+    botonserie.style.display = 'none';
+
+    const botonReiniciar = document.createElement('button');
+    botonReiniciar.textContent = 'Reiniciar';
+    botonReiniciar.id = 'botonreiniciar';
+    botonReiniciar.className = 'w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-xl shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50';
+    //botonReiniciar.addEventListener('click', reiniciarJuego);
+    divanexar.appendChild(botonReiniciar);
 
     let arraynumeros = []
     for (let elemento = 1; elemento <=90; elemento++){
         arraynumeros.push(elemento)
     }
     while (arraynumeros.length>0){
-        await sleep(6030)
+        await sleep(primerawait)
         let randomi = getRandomInt(arraynumeros.length)
         numero.textContent = arraynumeros[randomi]
         modificarEstilos(arraynumeros[randomi])
         modificarEstilosCeldaCarton(arraynumeros[randomi])
         arraynumeros.splice(randomi,1)
-        await sleep(2970)
+        comprobar(arraynumeros)
+        await sleep(segundoawait)
+    }
+    }
     }
 })
+
+boton2.addEventListener('click', async() => {
+    if(juegovalido<2){
+        alert("Con esto no podemos jugar, genera cartones o series")
+    }
+    else{
+    if(jugable == true){
+        jugable = false
+    const imagenrueda = document.querySelector('#activarrueda')
+    imagenrueda.style.backgroundImage = "url('../imagenes/bingoeditado.png')"
+    
+    botoncarton.style.display = 'none';
+    botonserie.style.display = 'none';
+
+    const botonReiniciar = document.createElement('button');
+    botonReiniciar.textContent = 'Reiniciar';
+    botonReiniciar.id = 'botonreiniciar';
+    botonReiniciar.className = 'w-auto sm:w-auto px-6 py-2 sm:px-6 sm:py-3 md:px-4 md:py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-xl shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50';
+    //botonReiniciar.addEventListener('click', reiniciarJuego);
+    definirBotonReiniciar(botonReiniciar)
+    divanexar.appendChild(botonReiniciar);
+
+    const botonComprobar = document.createElement('button');
+    botonComprobar.textContent = 'Comprobar';
+    botonComprobar.id = 'botonComprobar';
+    botonComprobar.className = 'w-auto sm:w-auto px-2 py-2 sm:px-2 sm:py-3 md:px-4 md:py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-xl shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50';
+    definirBotonComprobar(botonComprobar);
+    //botonComprobar.addEventListener('click', reiniciarJuego);
+    divanexar.appendChild(botonComprobar);
+
+    let arraynumeros = []
+    for (let elemento = 1; elemento <=90; elemento++){
+        arraynumeros.push(elemento)
+    }
+    while (arraynumeros.length>0){
+        await sleep(primerawait)
+        let randomi = getRandomInt(arraynumeros.length)
+        numero.textContent = arraynumeros[randomi]
+        modificarEstilos(arraynumeros[randomi])
+        //modificarEstilosCeldaCarton(arraynumeros[randomi])
+        arraynumeros.splice(randomi,1)
+        comprobar(arraynumeros)
+        await sleep(segundoawait)
+    }
+    }
+    }
+})
+
+function definirBotonComprobar(boton){
+    return 0
+}
+function definirBotonReiniciar(boton){
+    return 0
+}
+
+function comprobar(arraynumeros){
+    
+    todosloscartones.forEach((uncarton,cartonind) => {
+        const cartones = document.querySelectorAll('table'); 
+        let contador = [5,5,5]
+        uncarton.forEach((fila,i) => {
+            fila.forEach((num,j) => {
+                arraynumeros.forEach(numerosalido => {
+                    if(num == numerosalido){
+                        contador[j]--
+                    }
+                });
+            })
+        });
+
+        if(contador[0] == 5 && contador[1] == 5 && contador[2] == 5){
+            let cantarile = true
+            cartonescantaronbingo.forEach(hacantao => {
+                if(hacantao == cartones[cartonind].id){
+                    cantarile = false
+                }
+            });
+            if(cantarile == true && bingosmaximos>0){
+                alert("El carton"+cartones[cartonind].id.toUpperCase()+" ha cantado Bingo")
+                cartonescantaronbingo.push(cartones[cartonind].id)
+                bingosmaximos--
+            }
+            
+        }
+
+        if(contador[0] == 5 || contador[1] == 5 || contador[2] == 5){
+            let lineaganadora
+            contador.forEach((element,linea) => {
+                if(element == 5){
+                    lineaganadora = linea+1
+                }
+            });
+            let cantarile = true
+            cartonescantaronlinea.forEach(hacantao => {
+                if(hacantao == cartones[cartonind].id){
+                    cantarile = false
+                }
+            });
+            if(cantarile == true && lineasmaximas>0){
+                alert("El carton "+cartones[cartonind].id.toUpperCase()+" ha cantado Linea en la línea "+lineaganadora)
+                cartonescantaronlinea.push(cartones[cartonind].id)
+                lineasmaximas--
+            }
+            
+        }
+        if(bingosmaximos == 0){
+            alert("FIN DEL JUEGO")
+        }
+    });
+}
 
 function crearCarton(){
     const cartones = document.querySelector('#cartones')
@@ -132,11 +275,8 @@ function crearCarton(){
 }
 
 botoncarton.addEventListener('click', () =>  {
+    juegovalido++
     crearCarton()
-
-
-    //Lógica para crear Carton de nuevo si el cartón no es el adecuado. Reorganizar las funciones anteriores
-
 })
 
 function reemplazar0porcomas(numeroscarton){
@@ -605,7 +745,7 @@ function modificarEstilosCarton(tabla) {
       celda.style.cursor = celda.textContent ? 'pointer' : 'default';
       celda.style.color = '#FF8500';
 
-      if (celda.textContent) {
+      /*if (celda.textContent) {
         celda.addEventListener('mouseover', () => {
           celda.style.backgroundColor = '#ffeb3b';
           celda.style.transform = 'scale(1.1)';
@@ -621,17 +761,22 @@ function modificarEstilosCarton(tabla) {
         celda.addEventListener('click', () => {
           celda.style.backgroundColor = celda.style.backgroundColor === 'rgb(76, 175, 80)' ? '#fff' : '#4CAF50';
         });
-      }
+      }*/
     }
 
     const caption = tabla.querySelector('caption');
     caption.style.captionSide = 'top';
-    caption.style.marginBottom = '10px';
+    caption.style.marginBottom = '0px';
     caption.style.fontWeight = 'bold';
-    caption.style.fontSize = '16px';
-    caption.style.color = '#333';
+    caption.style.fontSize = '20px';
+    caption.style.color = '#ffffff';
     caption.style.textTransform = 'uppercase';
-    caption.style.letterSpacing = '1px';
+    caption.style.letterSpacing = '2px';
+    caption.style.textShadow = '1px 1px 2px rgba(0,0,0,0.1)';
+    caption.style.backgroundColor = '#FFA500';
+    caption.style.padding = '1px 16px';
+    caption.style.borderRadius = '5px 5px 0 0';
+    caption.style.boxShadow = '0 2px 4px rgba(255,0,0,0.5)';
 }
 
 function modificarEstilosCeldaCarton(numero) {
