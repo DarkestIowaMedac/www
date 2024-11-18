@@ -72,7 +72,7 @@ botonserie.addEventListener('click',() => {
     juegovalido = juegovalido + 6
 })
 boton.addEventListener('click', async() => {
-    
+
     if(juegovalido<2){
         alert("Con esto no podemos jugar, genera cartones o series")
     }
@@ -126,7 +126,7 @@ boton2.addEventListener('click', async() => {
         findeljuego = false
     const imagenrueda = document.querySelector('#activarrueda')
     imagenrueda.style.backgroundImage = "url('../imagenes/bingoeditado3.png')"
-    
+
     botoncarton.style.display = 'none';
     botonserie.style.display = 'none';
 
@@ -191,9 +191,9 @@ function imprimirDiv(modoviejas) {
         table {
             page-break-inside: avoid;
             background-color: #f0f0f0; /* Color de fondo de la tabla */
-            font-size: 54px; 
-            width: 100%; 
-            height: 26.5%; 
+            font-size: 54px;
+            width: 100%;
+            height: 26.5%;
             margin: 10px; /* Margen de la tabla */
             border-collapse: collapse; /* Combina los bordes de las celdas */
             border: 7px solid #FFA500; /* Bordes de la tabla */
@@ -236,14 +236,14 @@ function imprimirDiv(modoviejas) {
         ventanaImpresion.document.write(`
 
             <html>
-    
+
             <head>
-    
+
                 <title>Imprimir Cartones</title>
                  <style>
-    
+
                             body { font-family: Arial, sans-serif; }
-    
+
                             h1 { color: #333; }
                             table {page-break-inside: avoid;border-collapse: collapse;} /* Combina los bordes de las celdas */
                             th, td {
@@ -252,17 +252,17 @@ function imprimirDiv(modoviejas) {
                 }
                 </style>
             </head>
-    
+
             <body>
-    
+
                 <h1>Cartones:</h1>
-    
+
                 ${contenidoDiv}
-    
+
             </body>
-    
+
             </html>
-    
+
         `);
     }
     ventanaImpresion.document.close();
@@ -306,7 +306,7 @@ function hablarNumero(numero) {
 function comprobarcante(){
     let idcarton = prompt("Introduce el cartón que ha cantado con el formato s2c5")
     let lineaobingo = prompt("Introduce L para comprobar si tiene Línea o B para comprobar el bingo")
-    const cartones = document.querySelectorAll('table'); 
+    const cartones = document.querySelectorAll('table');
     let uncarton
     let idcorrecta
     let contador = [5,5,5]
@@ -336,7 +336,7 @@ function comprobarcante(){
         });
         }
     });
-        
+
         if((contador[0] == 5 || contador[1] == 5 || contador[2] == 5) && lineaobingo == 'L'){
             let lineaganadora
             contador.forEach((element,linea) => {
@@ -361,7 +361,7 @@ function comprobarcante(){
             else if(lineasmaximas<=0){
                 alert("Ya no se pueden cantar más líneas")
             }
-            
+
         }
         else if(lineaobingo == 'L'){
             alert("No tiene línea")
@@ -493,7 +493,7 @@ function comprobar(arraynumeros){
     let lineasrestar = 0
     let bingosrestar = 0
     todosloscartones.forEach((uncarton,cartonind) => {
-        const cartones = document.querySelectorAll('table'); 
+        const cartones = document.querySelectorAll('table');
         let contador = [5,5,5]
         uncarton.forEach((fila,i) => {
             fila.forEach((num,j) => {
@@ -524,7 +524,7 @@ function comprobar(arraynumeros){
                 lineasrestar++
                 //lineasmaximas--
             }
-            
+
         }
 
         if(contador[0] == 5 && contador[1] == 5 && contador[2] == 5){
@@ -540,10 +540,10 @@ function comprobar(arraynumeros){
                 bingosrestar++
                 //bingosmaximos--
             }
-            
+
         }
 
-        
+
     });
     lineasmaximas = lineasmaximas - lineasrestar
     bingosmaximos = bingosmaximos - bingosrestar
@@ -563,7 +563,7 @@ function crearCarton(){
     tabla.style.border = '1px solid black'
     tabla.style.borderCollapse = 'collapse'
     let numerosdelcarton = generarNumerosCarton()
-    
+
     let numerosdelcarton3 = ordenarNumerosCarton(numerosdelcarton)
     console.log(""+numerosdelcarton3)
     let numerosdelcarton2
@@ -574,8 +574,8 @@ function crearCarton(){
         numerosdelcarton3.forEach((fila,i) => {
             numerosdelcarton3[i].forEach((elemento,j) => {
                 numerosdelcarton2[i].push(numerosdelcarton3[i][j])
-            });   
-            
+            });
+
         });
         console.log(""+numerosdelcarton2)
         console.log(""+numerosdelcarton3)
@@ -586,7 +586,7 @@ function crearCarton(){
         console.log(i+"hoeafphae")
         i++
     }
-   
+
 
     numerosdelcarton2 = reemplazar0porcomas(numerosdelcarton2)
 
@@ -710,9 +710,9 @@ function decidirNulos(numeroscarton){
         let cercanasj = elementosporcolumna[columna] == 2 && elementosporcolumna[columna-1] == 2 && elementosporcolumna[columna+1] == 2
         let numseguidos = true
         let nulosseguidos = true
-        
+
         while((numseguidos || nulosseguidos)){
-           
+
 
             numseguidos = false
             nulosseguidos = false
@@ -1086,7 +1086,7 @@ function modificarEstilosCarton(tabla) {
         celda.style.backgroundSize = 'cover'; // O 'contain', según lo que necesites
 
         celda.style.backgroundRepeat = 'no-repeat'; // Evita que la imagen se repita
-    
+
         celda.style.backgroundPosition = 'center'; // Centra la imagen en la celda
     }
     celda.style.color = '#FF8500';

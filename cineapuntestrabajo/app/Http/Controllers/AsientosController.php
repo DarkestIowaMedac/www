@@ -61,5 +61,5 @@ class AsientosController extends Controller
 
     $s1['nombre']="Sala1";
 
-    
+
 */
