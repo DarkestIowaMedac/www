@@ -9,7 +9,7 @@ let juegovalido = 0
 
 let todosloscartones = []
 
-let modoviejas = true
+let modoviejas = false
 
 let lineasmaximas = 3
 let bingosmaximos = 1
