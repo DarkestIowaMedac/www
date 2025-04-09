@@ -7,6 +7,7 @@ use App\Models\Asientos;
 
 class AsientosController extends Controller
 {
+
     public function mostrarSala()
     {
         $asientos = Asientos::orderBy('fila')->orderBy('columna')->get();
@@ -17,6 +18,11 @@ class AsientosController extends Controller
         //con el nombre de la variable $asientos. sería compact ('variable1', 'variable2')
     }
 
+    /**
+     * @Brief Reserva o libera un asiento
+     * @param $i id del asiento
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function reservar($i){
         $asiento = Asientos::where('id',$i)->first();
         if ($asiento->ocupado == true){
